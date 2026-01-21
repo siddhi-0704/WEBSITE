@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - MyCompany</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="signup-page">
+        <div class="signup-container">
+            <h2>Create Your Account</h2>
+            <p class="signup-info">Join MyCompany today!</p>
+            <form class="signup-form" onsubmit="return validateSignup()">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="email" id="email" placeholder="Email Address" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                <button type="submit">Sign Up</button>
+            </form>
+            <p class="signup-footer">Already have an account? <a href="login.html">Login</a></p>
+            <p><a href="index.html"> ← Back to Home</a></p>
+        </div>
+    </div>
+
+    <script>
+        function validateSignup() {
+            let user = document.getElementById('username').value;
+            let email = document.getElementById('email').value;
+            let pass = document.getElementById('password').value;
+            let confirm = document.getElementById('confirmPassword').value;
+
+            if(user === "" || email === "" || pass === "" || confirm === "") {
+                alert("All fields are required!");
+                return false;
+            }
+            if(pass !== confirm) {
+                alert("Passwords do not match!");
+                return false;
+            }
+            alert("Signup Successful! (Demo only)");
+            return false;
+        }
+    </script>
+</body>
+</html>
+
