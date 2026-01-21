@@ -1,29 +1,32 @@
 const express = require("express");
-const cors = require("cors");
-const bodyParser = require("body-parser");
+const connectDB = require("./config/db");
 const path = require("path");
-
-const authRoutes = require("./routes/auth");
 
 const app = express();
 
+// Connect Database
+connectDB();
+
 // Middleware
-app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
 // Serve frontend
 app.use(express.static(path.join(__dirname, "public")));
 
-// API Routes
-app.use("/api/auth", authRoutes);
+// Routes
+app.use("/api/auth", require("./routes/auth"));
 
-// Default route
+// Default route (frontend SPA)
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
+// Server
 const PORT = 5000;
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
+
+
+
 

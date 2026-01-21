@@ -17,7 +17,7 @@
             <h2>Login to MyCompany</h2>
             <p class="login-info">Enter your credentials to access your account</p>
             <form class="login-form" onsubmit="return validateForm()">
-                <input type="text" id="username" placeholder="Username" required>
+                <input type="email" id="email" placeholder="Email Address" required>
                 <input type="password" id="password" placeholder="Password" required>
                 <button type="submit">Login</button>
             </form>
@@ -27,41 +27,30 @@
     </div>
 
     <script>
-async function validateForm() {
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+document.querySelector(".login-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
 
     try {
-        const response = await fetch("/api/auth/login", {
+        const res = await fetch("/api/auth/login", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                email,
-                password
-            })
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
         });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            alert(data.message);
-            return false;
-        }
-
+        const data = await res.json();
         alert(data.message);
-
-        // Later you can redirect to dashboard
-        // window.location.href = "dashboard.html";
-
-    } catch (error) {
-        alert("Server error");
+        if (res.status === 200) {
+            window.location.href = "index.html"; // or dashboard page
+        }
+    } catch (err) {
+        console.error(err);
+        alert("Error connecting to server");
     }
-
-    return false;
-}
+});
 </script>
+
 
 </body>
 </html>

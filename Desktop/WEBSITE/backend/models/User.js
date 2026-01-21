@@ -1,12 +1,23 @@
-// This is a placeholder model
-// Later you can convert this to MongoDB / MySQL
+const mongoose = require("mongoose");
 
-class User {
-  constructor(name, email, password) {
-    this.name = name;
-    this.email = email;
-    this.password = password;
-  }
-}
+const userSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+}, { timestamps: true });
 
-module.exports = User;
+module.exports = mongoose.model("User", userSchema);
+
