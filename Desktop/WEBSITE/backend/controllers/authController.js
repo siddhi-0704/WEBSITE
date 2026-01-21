@@ -1,41 +1,34 @@
-// Temporary in-memory storage (replace with DB later)
-let users = [];
+exports.signup = (req, res) => {
+    const { username, email, password } = req.body;
 
-// SIGNUP
-exports.signupUser = (req, res) => {
-  const { name, email, password } = req.body;
+    // Validation
+    if (!username || !email || !password) {
+        return res.status(400).json({
+            message: "All fields are required"
+        });
+    }
 
-  if (!name || !email || !password) {
-    return res.status(400).json({ message: "All fields are required" });
-  }
-
-  const userExists = users.find(u => u.email === email);
-  if (userExists) {
-    return res.status(400).json({ message: "User already exists" });
-  }
-
-  users.push({ name, email, password });
-
-  res.status(201).json({
-    message: "Signup successful",
-    user: { name, email }
-  });
+    // TEMP (no DB yet)
+    return res.status(201).json({
+        message: "Signup successful",
+        user: {
+            username,
+            email
+        }
+    });
 };
 
-// LOGIN
-exports.loginUser = (req, res) => {
-  const { email, password } = req.body;
+exports.login = (req, res) => {
+    const { email, password } = req.body;
 
-  const user = users.find(
-    u => u.email === email && u.password === password
-  );
+    if (!email || !password) {
+        return res.status(400).json({
+            message: "Email and password required"
+        });
+    }
 
-  if (!user) {
-    return res.status(401).json({ message: "Invalid credentials" });
-  }
-
-  res.json({
-    message: "Login successful",
-    user: { name: user.name, email: user.email }
-  });
+    return res.json({
+        message: "Login successful"
+    });
 };
+

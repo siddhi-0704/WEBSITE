@@ -27,17 +27,42 @@
     </div>
 
     <script>
-        function validateForm() {
-            let user = document.getElementById('username').value;
-            let pass = document.getElementById('password').value;
-            if(user === "" || pass === "") {
-                alert("Both fields are required!");
-                return false;
-            }
-            alert("Login Successful! (Demo only)");
+async function validateForm() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    try {
+        const response = await fetch("/api/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email,
+                password
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.message);
             return false;
         }
-    </script>
+
+        alert(data.message);
+
+        // Later you can redirect to dashboard
+        // window.location.href = "dashboard.html";
+
+    } catch (error) {
+        alert("Server error");
+    }
+
+    return false;
+}
+</script>
+
 </body>
 </html>
 
